@@ -94,6 +94,54 @@
       // Chaos mode (1/2500 chance)
       const chance = Math.floor(Math.random() * 2500) + 1;
       if (chance === 1) {
+
+        body {
+  background-color: #121212;
+  color: black;
+  font-family: Calibri, sans-serif;
+  text-align: center;
+  padding: 2rem;
+}
+
+h1, h2 {
+  color: black;
+  font-family: Calibri, sans-serif;
+}
+
+.soundboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.sound-button, .control-button {
+  background-color: #1f1f1f;
+  border: 2px solid #00ffcc;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sound-button:hover, .control-button:hover {
+  background-color: #00ffcc;
+  color: #000;
+}
+
+.controls {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="range"] {
+  width: 150px;
+}
+
         document.body.style.backgroundImage = `url('${chaosBackground}')`;
         document.body.style.backgroundSize = "cover";
         const alarm = new Audio
