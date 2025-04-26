@@ -132,7 +132,7 @@
       });
 
       // Chaos mode (rare)
-      const chance = Math.floor(Math.random() * 2500) + 1;
+      const chance = Math.floor(Math.random() * 3) + 1;
       if (chance === 1) {
         document.body.style.backgroundImage = `url('${chaosBackground}')`;
         const alarm = new Audio(alarmSound);
