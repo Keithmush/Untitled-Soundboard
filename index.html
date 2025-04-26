@@ -1,4 +1,68 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untitled Soundboard</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Calibri, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      background-size: cover;
+      background-position: center;
+    }
+    h1 {
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+    .soundboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .sound-button, .control-button {
+      background-color: #1e1e1e;
+      border: 2px solid #ffffff;
+      padding: 0.75rem;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.2s ease;
+    }
+    .sound-button:hover, .control-button:hover {
+      background-color: #00ffcc;
+      color: #000;
+    }
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    input[type="range"] {
+      width: 150px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Untitled Soundboard Site</h1>
+
+  <div class="soundboard" id="soundboard"></div>
+
+  <div class="controls">
+    <button class="control-button" onclick="stopAllSounds()">Stop All</button>
+    <input type="range" min="0" max="1" step="0.01" value="1" id="volumeSlider" onchange="changeVolume(this.value)">
+  </div>
+
+  <script>
     let currentAudio = null;
 
     const sounds = [
@@ -32,12 +96,6 @@
       audio.volume = document.getElementById("volumeSlider").value;
       audio.play();
       currentAudio = audio;
-
-      // Random event: 1/350 chance to trigger flashing Arabic text
-      const rareChance = Math.floor(Math.random() * 3) + 1;
-      if (rareChance === 1) {
-        triggerArabicWarning();
-      }
     }
 
     function stopAllSounds() {
@@ -51,25 +109,6 @@
       if (currentAudio) {
         currentAudio.volume = volume;
       }
-    }
-
-    function triggerArabicWarning() {
-      const warning = document.createElement("div");
-      warning.innerText = "نحن قادمون ، استعد لوصولنا.";
-      warning.style.position = "fixed";
-      warning.style.top = "50%";
-      warning.style.left = "50%";
-      warning.style.transform = "translate(-50%, -50%)";
-      warning.style.fontSize = "4rem";
-      warning.style.color = "red";
-      warning.style.fontWeight = "bold";
-      warning.style.zIndex = "9999";
-      warning.style.animation = "flash 0.5s infinite alternate";
-      document.body.appendChild(warning);
-
-      setTimeout(() => {
-        warning.remove();
-      }, 10000); // Remove after 10 seconds
     }
 
     window.onload = function () {
@@ -92,5 +131,7 @@
         alarm.play();
       }
     };
-</script>
+  </script>
+</body>
+</html>
 
