@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Untitled Soundboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundboard</title>
   <style>
     body {
       background-color: #121212;
@@ -19,7 +19,6 @@
     }
     h1 {
       margin-bottom: 2rem;
-      color: #ffffff;
     }
     .soundboard {
       display: grid;
@@ -50,52 +49,78 @@
     input[type="range"] {
       width: 150px;
     }
+    .warning-text {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: red;
+      font-size: 4rem;
+      font-weight: bold;
+      text-align: center;
+      animation: flash 1s infinite;
+      display: none;
+      z-index: 9999;
+    }
+    @keyframes flash {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
+
   <h1>Untitled Soundboard Site</h1>
 
-  <div class="soundboard" id="soundboard"></div>
+  <div class="soundboard">
+    <div class="sound-button" onclick="playSound('sound1.mp3')">صوت😂🤣 عربي مضحك</div>
+    <div class="sound-button" onclick="playSound('sound2.mp3')">Fart</div>
+    <div class="sound-button" onclick="playSound('sound3.mp3')">Explosion</div>
+    <div class="sound-button" onclick="playSound('sound4.mp3')">Tung Tung Tung</div>
+    <div class="sound-button" onclick="playSound('sound5.mp3')">Samsung Over The Horizon</div>
+    <div class="sound-button" onclick="playSound('sound6.mp3')">Correct Sound</div>
+    <div class="sound-button" onclick="playSound('sound7.mp3')">Incorrect Buzzer</div>
+    <div class="sound-button" onclick="playSound('sound8.mp3')">Aughhh</div>
+    <div class="sound-button" onclick="playSound('sound9.mp3')">Violin Screech</div>
+    <div class="sound-button" onclick="playSound('sound10.mp3')">iPhone Ping</div>
+    <div class="sound-button" onclick="playSound('sound11.mp3')">Clash Of Clans Laugh</div>
+    <div class="sound-button" onclick="playSound('sound12.mp3')">Bad To The Bone Riff</div>
+    <div class="sound-button" onclick="playSound('sound13.mp3')">Goofy Laugh</div>
+    <div class="sound-button" onclick="playSound('sound14.mp3')">Vine Boom</div>
+    <div class="sound-button" onclick="playSound('sound15.mp3')">Fart 2</div>
+    <div class="sound-button" onclick="playSound('sound16.mp3')">Goofy Alarm</div>
+  </div>
 
   <div class="controls">
     <button class="control-button" onclick="stopAllSounds()">Stop All</button>
     <input type="range" min="0" max="1" step="0.01" value="1" id="volumeSlider" onchange="changeVolume(this.value)">
   </div>
 
+  <div id="warningText" class="warning-text">نحن قادمون ، استعد لوصولنا.</div>
+
   <script>
     let currentAudio = null;
 
-    const sounds = [
-      "sound1.mp3",
-      "sound2.mp3",
-      "sound3.mp3",
-      "sound4.mp3",
-      "sound5.mp3",
-      "sound6.mp3",
-      "sound7.mp3",
-      "sound8.mp3",
-      "sound9.mp3",
-      "sound10.mp3",
-      "sound11.mp3",
-      "sound12.mp3",
-      "sound13.mp3",
-      "sound14.mp3",
-      "sound15.mp3",
-      "sound16.mp3"
-    ];
-
-    const alarmSound = "legendarypull.mp3";
-    const chaosBackground = "https://media.discordapp.net/attachments/1342617491364384839/1365777199696838696/teletubbies_scary_by_ml_tordoff_d9omdpd-fullview.png?ex=680e8aa3&is=680d3923&hm=591bfe13d86b3053dbe298127d4f936e30b6c336f1389a9ea64a66caae0d0c48&=&format=webp&quality=lossless&width=1149&height=860";
-
-    function playSound(index) {
+    function playSound(file) {
       if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
       }
-      const audio = new Audio(sounds[index]);
+      const audio = new Audio(file);
       audio.volume = document.getElementById("volumeSlider").value;
       audio.play();
       currentAudio = audio;
+
+      // 1/350 chance to show warning
+      const chance = Math.floor(Math.random() * 350) + 1;
+      if (chance === 1) {
+        const warning = document.getElementById('warningText');
+        warning.style.display = 'block';
+        setTimeout(() => {
+          warning.style.display = 'none';
+        }, 10000); // 10 seconds
+      }
     }
 
     function stopAllSounds() {
@@ -110,28 +135,9 @@
         currentAudio.volume = volume;
       }
     }
-
-    window.onload = function () {
-      const container = document.getElementById("soundboard");
-      sounds.forEach((sound, index) => {
-        const button = document.createElement("div");
-        button.className = "sound-button";
-        button.innerText = `Sound ${index + 1}`;
-        button.onclick = () => playSound(index);
-        container.appendChild(button);
-      });
-
-      // Chaos mode (1/2500 chance)
-      const chance = Math.floor(Math.random() * 2500) + 1;
-      if (chance === 1) {
-        document.body.style.backgroundImage = `url('${chaosBackground}')`;
-        const alarm = new Audio(alarmSound);
-        alarm.loop = true;
-        alarm.volume = 1.0;
-        alarm.play();
-      }
-    };
   </script>
+
 </body>
 </html>
+
 
