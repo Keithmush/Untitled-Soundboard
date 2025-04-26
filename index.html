@@ -26,9 +26,9 @@
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1rem;
       width: 100%;
-      max-width: 800px;
+      max-width: 1000px;
     }
-.sound-button, .control-button {
+    .sound-button, .control-button {
       background-color: #1e1e1e;
       border: 2px solid #00ffcc;
       padding: 0.75rem;
@@ -54,37 +54,40 @@
 </head>
 <body>
   <h1>🎧 Soundboard</h1>
-  <div class="soundboard">
-    <div class="sound-button" onclick="playSound(0)">Sound 1</div>
-    <div class="sound-button" onclick="playSound(1)">Sound 2</div>
-    <div class="sound-button" onclick="playSound(2)">Sound 3</div>
-    <div class="sound-button" onclick="playSound(3)">Sound 4</div>
-<div class="sound-button" onclick="playSound(4)">Sound 5</div>
-    <div class="sound-button" onclick="playSound(5)">New KEM Sound</div>
-    <div class="sound-button" onclick="playSound(6)">Sound 7</div>
-    <div class="sound-button" onclick="playSound(7)">Sound 8</div>
-    <div class="sound-button" onclick="playSound(8)">Goober Sound</div>
-  </div>
+
+  <div class="soundboard" id="soundboard"></div>
 
   <div class="controls">
-    <button class="control-button" onclick="stopAllSounds()">Stop</button>
+    <button class="control-button" onclick="stopAllSounds()">Stop All</button>
     <input type="range" min="0" max="1" step="0.01" value="1" id="volumeSlider" onchange="changeVolume(this.value)">
   </div>
 
   <script>
     let currentAudio = null;
+
     const sounds = [
       "sound1.mp3",
       "sound2.mp3",
       "sound3.mp3",
       "sound4.mp3",
       "sound5.mp3",
+      "sound6.mp3",
+      "sound7.mp3",
+      "sound8.mp3",
+      "sound9.mp3",
+      "sound10.mp3",
+      "sound11.mp3",
+      "sound12.mp3",
+      "sound13.mp3",
+      "sound14.mp3",
+      "sound15.mp3",
+      "sound16.mp3",
       "youtube_kem5AfOws9Y_audio.mp3",
-      "sound 7.mp3",
       "youtube_3gCBFKHVJVA_audio.mp3",
       "reddit_xxx_goober_xxx_1k37csw_audio.mp3"
     ];
-const alarmSound = "youtube_onib3bDo6Z0_audio.mp3";
+
+    const alarmSound = "youtube_onib3bDo6Z0_audio.mp3";
     const chaosBackground = "21559ecb-29c1-4339-b47c-cf1a70854078.png";
 
     function playSound(index) {
@@ -94,7 +97,9 @@ const alarmSound = "youtube_onib3bDo6Z0_audio.mp3";
       }
       const audio = new Audio(sounds[index]);
       audio.volume = document.getElementById("volumeSlider").value;
-      if (index === 8) {
+
+      // Special case for Goober Sound (index 18)
+      if (index === 18) {
         audio.addEventListener('loadedmetadata', () => {
           audio.currentTime = 270;
           audio.play();
@@ -120,9 +125,19 @@ const alarmSound = "youtube_onib3bDo6Z0_audio.mp3";
     }
 
     window.onload = function () {
-      const chance = Math.floor(Math.random() * 30) + 1;
+      const container = document.getElementById("soundboard");
+      sounds.forEach((sound, index) => {
+        const button = document.createElement("div");
+        button.className = "sound-button";
+        button.innerText = `Sound ${index + 1}`;
+        button.onclick = () => playSound(index);
+        container.appendChild(button);
+      });
+
+      // Chaos mode (rare)
+      const chance = Math.floor(Math.random() * 2500) + 1;
       if (chance === 1) {
-        document.body.style.backgroundImage = url('${chaosBackground}');
+        document.body.style.backgroundImage = `url('${chaosBackground}')`;
         const alarm = new Audio(alarmSound);
         alarm.loop = true;
         alarm.volume = 1.0;
