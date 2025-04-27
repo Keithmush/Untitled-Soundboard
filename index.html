@@ -55,7 +55,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: red;
-      font-size: 4rem;
+      font-size: 3rem;
       font-weight: bold;
       text-align: center;
       animation: flash 1s infinite;
@@ -97,7 +97,7 @@
     <input type="range" min="0" max="1" step="0.01" value="1" id="volumeSlider" onchange="changeVolume(this.value)">
   </div>
 
-  <div id="warningText" class="warning-text">نحن قادمون ، استعد لوصولنا.</div>
+  <div id="warningText" class="warning-text">نحن قادمون ، استعد لوصولنا</div>
 
   <script>
     let currentAudio = null;
@@ -112,14 +112,9 @@
       audio.play();
       currentAudio = audio;
 
-      // 1/350 chance to show warning
-      const chance = Math.floor(Math.random() * 350) + 1;
+      const chance = Math.floor(Math.random() * 200) + 1;
       if (chance === 1) {
-        const warning = document.getElementById('warningText');
-        warning.style.display = 'block';
-        setTimeout(() => {
-          warning.style.display = 'none';
-        }, 10000); // 10 seconds
+        showWarningWithIP();
       }
     }
 
@@ -135,9 +130,31 @@
         currentAudio.volume = volume;
       }
     }
+
+    async function showWarningWithIP() {
+      const warning = document.getElementById('warningText');
+
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        const userIP = data.ip;
+
+        warning.innerHTML = `نحن قادمون ، استعد لوصولنا<br>🧠 IP: ${userIP}`;
+      } catch (error) {
+        warning.innerHTML = `نحن قادمون ، استعد لوصولنا<br>🧠 IP: (غير معروف)`;
+        console.error('Failed to fetch IP:', error);
+      }
+
+      warning.style.display = 'block';
+      setTimeout(() => {
+        warning.style.display = 'none';
+        warning.innerHTML = 'نحن قادمون ، استعد لوصولنا'; // reset text
+      }, 10000); // 10 seconds
+    }
   </script>
 
 </body>
 </html>
+
 
 
