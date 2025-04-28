@@ -16,6 +16,8 @@
       padding: 2rem;
       background-size: cover;
       background-position: center;
+      transition: background 1s ease;
+      position: relative;
     }
     h1 {
       margin-bottom: 2rem;
@@ -62,6 +64,18 @@
       display: none;
       z-index: 9999;
     }
+    .creepy-text {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 3rem;
+      color: red;
+      font-weight: bold;
+      animation: flash 1s infinite;
+      display: none;
+      z-index: 9999;
+    }
     @keyframes flash {
       0% { opacity: 1; }
       50% { opacity: 0; }
@@ -98,6 +112,7 @@
   </div>
 
   <div id="warningText" class="warning-text">نحن قادمون ، استعد لوصولنا</div>
+  <div id="creepyText" class="creepy-text">نص عربي بدون عنوان</div>
 
   <script>
     let currentAudio = null;
@@ -133,23 +148,29 @@
 
     async function showWarningWithIP() {
       const warning = document.getElementById('warningText');
-
       try {
         const response = await fetch('https://api.ipify.org?format=json');
         const data = await response.json();
         const userIP = data.ip;
-
         warning.innerHTML = `نحن قادمون ، استعد لوصولنا<br>🧠 IP: ${userIP}`;
       } catch (error) {
         warning.innerHTML = `نحن قادمون ، استعد لوصولنا<br>🧠 IP: (غير معروف)`;
         console.error('Failed to fetch IP:', error);
       }
-
       warning.style.display = 'block';
       setTimeout(() => {
         warning.style.display = 'none';
-        warning.innerHTML = 'نحن قادمون ، استعد لوصولنا'; // reset text
-      }, 10000); // 10 seconds
+        warning.innerHTML = 'نحن قادمون ، استعد لوصولنا';
+      }, 10000);
+    }
+
+    // 1/100 chance to set creepy background
+    window.onload = function() {
+      const chance = Math.floor(Math.random() * 3) + 1;
+      if (chance === 1) {
+        document.body.style.backgroundImage = "url('c.webp')";
+        document.getElementById('creepyText').style.display = 'block';
+      }
     }
   </script>
 
