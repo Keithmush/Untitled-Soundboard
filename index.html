@@ -166,7 +166,7 @@
 
     // 1/100 chance to set creepy background
     window.onload = function() {
-      const chance = Math.floor(Math.random() * 3) + 1;
+      const chance = Math.floor(Math.random() * 100) + 1;
       if (chance === 1) {
         document.body.style.backgroundImage = "url('c.webp')";
         document.getElementById('creepyText').style.display = 'block';
